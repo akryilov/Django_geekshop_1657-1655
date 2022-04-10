@@ -66,10 +66,13 @@ def profile(request):
             print(form.errors)
 
     user_select = request.user
+
+    baskets = Basket.objects.filter(user=user_select)
+
     context = {
         'title': 'Geekshop | Профиль',
         'form': UserProfileForm(instance=user_select),
-        'baskets': Basket.objects.filter(user=user_select)
+        'baskets': baskets
 
     }
     return render(request, 'authapp/profile.html', context)

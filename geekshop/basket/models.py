@@ -18,13 +18,13 @@ class Basket(models.Model):
         return f'Корзина для {self.user.username} | Продукт {self.product.name}'
 
 
-    def pre_sum(self):
+    def sum(self):
         return self.quantity * self.product.price
 
 
     def total_sum(self):
         baskets = Basket.objects.filter(user=self.user)
-        return sum(basket.pre_sum() for basket in baskets)
+        return sum(basket.sum() for basket in baskets)
 
 
     def total_quantity(self):
