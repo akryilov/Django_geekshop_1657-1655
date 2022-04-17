@@ -1,51 +1,41 @@
 {% extends 'adminapp/base.html' %}
 {% block context %}
             <div class="container-fluid">
-                <h1 class="mt-4">Продукты</h1>
+                <h1 class="mt-4">Категории</h1>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table mr-1"></i>
-                        Продукты
+                        Категории
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Имя продукта</th>
-                                    <th>Описание</th>
-                                    <th>Стоимость</th>
-                                    <th>Количество</th>
-                                    <th>Категория</th>
+                                    <th>Имя категории</th>
                                     <th>Активность</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Имя продукта</th>
-                                    <th>Описание</th>
-                                    <th>Стоимость</th>
-                                    <th>Количество</th>
-                                    <th>Категория</th>
+                                    <th>Имя категории</th>
                                     <th>Активность</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                    {% for product in products %}
+                                    {% for category in categories %}
                                         <tr>
-                                            <td><a href="{% url 'adminapp:admin_product_update' product.id %}" style="color: dodgerblue">{{ product.name }}</a></td>
-                                            <td>{{ product.descriptions }}</td>
-                                            <td>{{ product.price }}</td>
-                                            <td>{{ product.quantity }}</td>
-                                            <td>{{ product.category.name }}</td>
+                                            <td><a href="{% url 'adminapp:admin_category_update' category.id %}" style="color: dodgerblue">{{ category.name }}</a></td>
 
-                                            <td class="text-center">
-                                                {% if product.is_active %}
+                                        <td class="text-center">
+                                                {% if category.is_active %}
                                                     <i class="fas fa-check-circle"></i>
                                                 {% else %}
                                                     <i class="fas fa-times-circle"></i>
                                                 {% endif %}
-                                            </td>
+
+                                        </td>
+
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -53,10 +43,11 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="{% url 'adminapp:admin_product_create' %}">
-                            <button class="btn btn-success">Добавить продукт</button>
+                        <a href="{% url 'adminapp:admin_category_create' %}">
+                            <button class="btn btn-success">Добавить категорию</button>
                         </a>
                     </div>
                 </div>
             </div>
 {% endblock %}
+
