@@ -5,18 +5,17 @@
                                     <div class="card h-100">
                                         <a href="#">
                                             <img class="card-img-top"
-                                                 src="{{product.image.url}}"
+                                                 src="{{ product.image.url }}"
                                                  alt="">
                                         </a>
                                         <div class="card-body">
                                             <h4 class="card-title">
-                                                <a href="#">{{product.name}}</a>
+                                                <a href="{% url 'mainapp:detail' product.id %}">{{product.name}}</a>
                                             </h4>
                                             <h5>{{product.price}}руб.</h5>
                                             <p class="card-text">{{product.dict}}</p>
                                         </div>
                                         <div class="card-footer text-center">
-<!--                                            <a href="{% url 'basket:basket_add' product.id %}" class="btn btn-outline-success">Отправить в корзину</a>-->
                                             <button type="button" class="btn btn-outline-success" value="{{ product.id}}">
                                                 Отправить в корзину
                                             </button>

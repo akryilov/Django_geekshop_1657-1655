@@ -28,14 +28,14 @@ def basket_add(request, id):
     if request.is_ajax():
         user_select = request.user
         product = Product.objects.get(id=id)
-        baskets = Basket.objects.filter(user=user_select, product=product)
+        baskets = Basket.objects.filter(user=user_select,product=product)
 
         if baskets:
             basket = baskets.first()
-            basket.quantity += 1
+            basket.quantity +=1
             basket.save()
         else:
-            Basket.objects.create(user=user_select, product=product, quantity=1)
+            Basket.objects.create(user=user_select,product=product,quantity=1)
 
         products = Product.objects.all()
         context = {'products': products}
