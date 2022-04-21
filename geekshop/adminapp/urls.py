@@ -1,32 +1,32 @@
 from django.urls import path
 
 from adminapp.views import UserListView, IndexTemplateView, UserCreateView, UserUpdateView, UserDeleteView
-from adminapp.views import CategoryListView
+from adminapp.views import CategoryListView, CategoryCreateView, CategoryUpdateView, CategoryDeleteView
 ###
 # import adminapp.views as adminapp
-from adminapp.views import admin_products, admin_category_create, admin_category_update, admin_category_delete, admin_product_create, admin_product_delete, admin_product_update
+from adminapp.views import ProductListView, ProductCreateView, ProductUpdateView, ProductDeleteView
 
 app_name = 'adminapp'
 
 urlpatterns = [
 
     path('', IndexTemplateView.as_view(), name='index'),
-    path('users/', UserListView.as_view(), name = 'admin_users'),
+    path('users/', UserListView.as_view(), name='admin_users'),
     path('user-create/', UserCreateView.as_view(), name='admin_user_create'),
-    path('user-update/<int:id>/', UserUpdateView.as_view(), name='admin_user_update'),
-    path('user-delete/<int:id>/', UserDeleteView.as_view(), name='admin_user_delete'),
+    path('user-update/<int:pk>/', UserUpdateView.as_view(), name='admin_user_update'),
+    path('user-delete/<int:pk>/', UserDeleteView.as_view(), name='admin_user_delete'),
 
 
     path('categories/', CategoryListView.as_view(), name ='admin_categories'),
-    path('category-create/', admin_category_create, name ='admin_category_create'),
-    path('category-update/<int:id>/', admin_category_update, name ='admin_category_update'),
-    path('category-delete/<int:id>/', admin_category_delete, name ='admin_category_delete'),
+    path('category-create/', CategoryCreateView.as_view(), name ='admin_category_create'),
+    path('category-update/<int:pk>/', CategoryUpdateView.as_view(), name ='admin_category_update'),
+    path('category-delete/<int:pk>/', CategoryDeleteView.as_view(), name ='admin_category_delete'),
 
 
-    path('products/', admin_products, name= 'admin_products'),
-    path('product-create/', admin_product_create, name='admin_product_create'),
-    path('product-update/<int:id>/', admin_product_update, name='admin_product_update'),
-    path('product-delete/<int:id>/', admin_product_delete, name='admin_product_delete'),
+    path('products/', ProductListView.as_view(), name= 'admin_products'),
+    path('product-create/', ProductCreateView.as_view(), name='admin_product_create'),
+    path('product-update/<int:pk>/', ProductUpdateView.as_view(), name='admin_product_update'),
+    path('product-delete/<int:pk>/', ProductDeleteView.as_view(), name='admin_product_delete'),
 
 ]
 
