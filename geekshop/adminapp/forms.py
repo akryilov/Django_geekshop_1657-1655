@@ -42,7 +42,6 @@ class UserAdminProfileForm(UserChangeForm):
             field.widget.attrs['class'] = 'form-control py-4'
         self.fields['image'].widget.attrs['class'] = 'custom-file-input'
 
-
 #####
 
 class ProductAdminRegisterForm(forms.ModelForm):
