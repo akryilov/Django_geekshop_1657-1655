@@ -32,6 +32,8 @@ urlpatterns = [
     ###
     # path('admin/', include('adminapp.urls', namespace='admin'))
     path('i18n/', include('django.conf.urls.i18n')),
+
+    path('', include('social_django.urls', namespace ='social'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

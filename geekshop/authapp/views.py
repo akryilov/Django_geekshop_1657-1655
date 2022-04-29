@@ -4,14 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView, LoginView, FormView
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView
 
 from adminapp.mixin import BaseClassContextMixin, UserDispatchMixin
-from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
 from authapp.models import User
 from basket.models import Basket
 
@@ -79,7 +79,7 @@ class RegisterView(FormView, BaseClassContextMixin):
             user = form.save()
             if self.send_verify_link(user):
                 messages.set_level(request, messages.SUCCESS)
-                messages.success(request, 'Вы успешно зарегистрировались',extra_tags='register')
+                messages.success(request, 'Вы успешно зарегистрировались', extra_tags='register')
                 return HttpResponseRedirect(reverse('authapp:login'))
             else:
                 messages.set_level(request, messages.ERROR)
@@ -104,7 +104,7 @@ class RegisterView(FormView, BaseClassContextMixin):
                 user.activation_key_expires = None
                 user.is_active = True
                 user.save()
-                auth.login(self, user)
+                auth.login(self, user, backend='django.contrib.auth.backends.ModelBackend')
             return render(self, 'authapp/verification.html')
         except Exception as e:
             return HttpResponseRedirect(reverse('index'))
@@ -149,10 +149,17 @@ class ProfileFormView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
     success_url = reverse_lazy('authapp:profile')
     title = 'Geekshop | Профиль'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(ProfileFormView, self).get_context_data()
-    #     context['baskets'] = Basket.objects.filter(user=self.request.user)
-    #     return context
+    def post(self, request, *args, **kwargs):
+        form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
+        profile_form = UserProfileEditForm(data=request.POST, files=request.FILES, instance=request.user.userprofile)
+        if form.is_valid() and profile_form.is_valid():
+            form.save()
+        return redirect(self.success_url)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileFormView, self).get_context_data()
+        context['profile'] = UserProfileEditForm(instance=self.request.user.userprofile)
+        return context
 
     def form_valid(self, form):
         messages.set_level(self.request, messages.SUCCESS)
